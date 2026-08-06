@@ -1,4 +1,4 @@
-module github.com/username/template
+module github.com/matthiasharzer/go-stats-viewer
 
 go 1.26.4
 
