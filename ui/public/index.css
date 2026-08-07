@@ -26,6 +26,9 @@ body {
 	height: 100dvh;
 	margin: 0;
 	line-height: 1;
+	overflow: hidden;
+	overflow-y: auto;
+	scrollbar-gutter: stable both-edges;
 }
 
 @keyframes trail-appear {

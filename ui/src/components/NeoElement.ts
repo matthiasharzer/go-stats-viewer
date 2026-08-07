@@ -13,7 +13,7 @@ export class NeoElement extends Component {
 	`;
 
 	@property()
-	variant: VariantName = 'window';
+	variant: VariantName = 'default';
 
 	@property()
 	radius: RadiusName = 'sharp';

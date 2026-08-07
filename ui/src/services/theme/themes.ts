@@ -21,11 +21,11 @@ export const defaultTheme: Theme = buildTheme({
 			canvas: {
 				surface: '#fff1e8',
 			},
-			window: {
+			'search-box': {
 				surface: '#a9d7b8',
 			},
-			'window-header': {
-				surface: '#FF90E8',
+			'search-result': {
+				surface: '#FFC900',
 			},
 			'sidebar-button-deselected': {
 				surface: '#FFC900',

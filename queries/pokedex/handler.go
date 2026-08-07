@@ -17,7 +17,7 @@ func Handler(pokedexView view.ReadOnlyView[pokemon.Pokemon]) http.HandlerFunc {
 				http.Error(w, err.Error(), http.StatusInternalServerError)
 				return
 			}
-			responsePokeDex = append(responsePokeDex, ResponsePokemon{
+			responsePokemon := ResponsePokemon{
 				ID:         p.ID,
 				DexNr:      p.DexNr,
 				Generation: p.Generation,
@@ -41,14 +41,19 @@ func Handler(pokedexView view.ReadOnlyView[pokemon.Pokemon]) http.HandlerFunc {
 						German:  p.PrimaryType.Names.German,
 					},
 				},
-				SecondaryType: ResponseType{
+				SecondaryType: nil,
+			}
+			if p.SecondaryType != nil {
+				responsePokemon.SecondaryType = &ResponseType{
 					Type: p.SecondaryType.Type,
 					Names: ResponseTranslation{
 						English: p.SecondaryType.Names.English,
 						German:  p.SecondaryType.Names.German,
 					},
-				},
-			})
+				}
+			}
+
+			responsePokeDex = append(responsePokeDex, responsePokemon)
 		}
 
 		response := Response{

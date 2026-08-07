@@ -1,4 +1,5 @@
-import { type CSSResultGroup, css, LitElement } from 'lit';
+import { type CSSResultGroup, css, LitElement, unsafeCSS } from 'lit';
+import { typeColors } from '../services/pokedex/pokemon.ts';
 
 const cssOverwrites = css`
 
@@ -39,6 +40,14 @@ h1, h2, h3, h4, h5, h6 {
   isolation: isolate;
 }
 `;
+
+const typeClasses = Object.entries(typeColors).map(([type, color]) => {
+	return unsafeCSS(`
+		.POKEMON_TYPE_${type.toUpperCase()} {
+			background-color: ${color};
+		}
+	`);
+});
 
 export class Component extends LitElement {
 	private static _styles: CSSResultGroup;

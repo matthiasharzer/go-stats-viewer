@@ -4,38 +4,37 @@ import { Component } from '../litutil/Component.ts';
 export class Background extends Component {
 	static styles = css`
 		:host {
-			position: absolute;
+			position: fixed;
 			background-color: var(--colors-variants-canvas-surface);
 			top: 0;
 			left: 0;
 			right: 0;
 			bottom: 0;
+			overflow: hidden;
 		}
 
-		.dotted-overlay {
+		.overlay {
 			position: absolute;
-			top: 0;
-			left: 0;
-			right: 0;
-			bottom: 0;
 
-			 --circle-diameter: 2px;
-			 --circle-spacing: 40px;
-			 --circle-color: color-mix(in srgb, var(--colors-variants-canvas-ink) 50%, transparent);
-			background : radial-gradient(
-				circle at
-						var(--circle-diameter)
-						var(--circle-diameter),
-				var(--circle-color) calc(var(--circle-diameter) - 1px),
-				transparent var(--circle-diameter)
-			)
-			0 0 / var(--circle-spacing) var(--circle-spacing);
+			top: -50%;
+  		left: -50%;
+			width: 200%;
+  		height: 200%;
+
+			background-image:
+				url("./assets/images/ball.png"),
+				url("./assets/images/ball.png");
+			background-size: 80px 80px, 80px 80px;
+			background-position: 0 0, 40px 	40px;
+			background-repeat: repeat, repeat;
+			transform: rotate(-25deg);
+			opacity: 0.2;
 		}
 	`;
 
 	render() {
 		return html`
-		<div class="dotted-overlay"></div>
+		<div class="overlay"></div>
 		`;
 	}
 }

@@ -13,11 +13,9 @@ export class NeoButton extends Component {
 			all: unset;
 			font-weight: 600;
 			cursor: pointer;
+			width: 100%;
 		}
 
-		mh-neo-element {
-			padding: 0.5rem 1rem;
-		}
 
 		button:active mh-neo-element {
 			box-shadow: 0px 0px 0px var(--shadow-color);
@@ -26,7 +24,7 @@ export class NeoButton extends Component {
 	`;
 
 	@property()
-	variant: VariantName = 'window';
+	variant: VariantName = 'default';
 
 	@property()
 	radius: RadiusName = 'sharp';
@@ -40,13 +38,13 @@ export class NeoButton extends Component {
 	render() {
 		return html`
 			<button ?disabled=${this.disabled}>
-				<mh-neo-element
+				<go-neo-element
 					variant=${this.variant}
 					radius=${this.radius}
 					border=${this.border}
 				>
 					<slot></slot>
-				</mh-neo-element>
+				</go-neo-element>
 			</button>
 		`;
 	}

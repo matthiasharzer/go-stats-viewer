@@ -2,4 +2,5 @@ import './App.ts';
 import './components/NeoElement.ts';
 import './components/NeoButton.ts';
 import './components/Background.ts';
+import './SearchBar.ts';
 import './services/theme/themes.ts';
