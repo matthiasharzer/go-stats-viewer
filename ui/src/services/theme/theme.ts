@@ -11,21 +11,21 @@ export interface ThemeBuilder<TColor> {
 		defaults: {
 			surface: string;
 			ink: string;
-		},
+		};
 		variants: {
 			accent: Variant<TColor>;
 			default: Variant<TColor>;
 			canvas: Variant<TColor>;
 			window: Variant<TColor>;
-			"window-header": Variant<TColor>;
-			"sidebar-button-deselected": Variant<TColor>;
-			"sidebar-button-selected": Variant<TColor>;
+			'window-header': Variant<TColor>;
+			'sidebar-button-deselected': Variant<TColor>;
+			'sidebar-button-selected': Variant<TColor>;
 			info: Variant<TColor>;
 			success: Variant<TColor>;
 			warning: Variant<TColor>;
 			error: Variant<TColor>;
-		},
-	},
+		};
+	};
 	border: {
 		color: TColor;
 		width: {
@@ -38,7 +38,7 @@ export interface ThemeBuilder<TColor> {
 		offset: {
 			x: string;
 			y: string;
-		}
+		};
 	};
 	radius: {
 		sharp: string;

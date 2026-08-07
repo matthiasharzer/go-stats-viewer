@@ -6,13 +6,14 @@
 		"@lit/localize": "0.12.2",
 		"@lit/localize-tools": "0.8.2",
 		"@lit/task": "1.0.3",
-    "@vaadin/router": "2.0.0",
+		"@vaadin/router": "2.0.0",
 		"esbuild": "0.28.1",
 		"lit": "3.3.3",
 		"typescript": "6.0.3"
 	},
 	"scripts": {
 		"analyze": "biome check --error-on-warnings",
+		"test": "echo \"not implemented\"",
 		"format": "biome check --write",
 		"build": "esbuild --bundle --outdir=public/dist --keep-names src/index.ts",
 		"typecheck": "tsc --noEmit",

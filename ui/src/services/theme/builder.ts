@@ -2,10 +2,10 @@ import type { Color, Theme, ThemeBlueprint, Variant } from './theme.ts';
 
 export const buildTheme = (blueprint: ThemeBlueprint): Theme => {
 	const resolveColor = (color: Color, seen: Set<Color> | null = null): string => {
-		if (typeof color === "function") {
+		if (typeof color === 'function') {
 			seen = seen || new Set();
 			if (seen.has(color)) {
-				throw new Error("Circular reference detected");
+				throw new Error('Circular reference detected');
 			}
 			seen.add(color);
 			const result = resolveColor(color(blueprint), seen);
@@ -28,47 +28,48 @@ export const buildTheme = (blueprint: ThemeBlueprint): Theme => {
 		};
 	};
 
-	const resolveSurfaces = (surfaces: ThemeBlueprint['colors']['variants']): Theme['colors']['variants'] => {
+	const resolveSurfaces = (
+		surfaces: ThemeBlueprint['colors']['variants'],
+	): Theme['colors']['variants'] => {
 		const resolvedSurfaces: Theme['colors']['variants'] = {} as Theme['colors']['variants'];
 		for (const [key, surface] of Object.entries(surfaces)) {
 			resolvedSurfaces[key as keyof Theme['colors']['variants']] = resolveSurface(surface);
 		}
 		return resolvedSurfaces;
-	}
+	};
 
 	return {
 		name: blueprint.name,
 		colors: {
 			defaults: {
 				surface: blueprint.colors.defaults.surface,
-				ink: blueprint.colors.defaults.ink
+				ink: blueprint.colors.defaults.ink,
 			},
-			variants: resolveSurfaces(blueprint.colors.variants)
+			variants: resolveSurfaces(blueprint.colors.variants),
 		},
 		border: {
 			color: resolveColor(blueprint.border.color),
-			width: blueprint.border.width
+			width: blueprint.border.width,
 		},
 		shadow: {
 			color: resolveColor(blueprint.shadow.color),
-			offset: blueprint.shadow.offset
+			offset: blueprint.shadow.offset,
 		},
-		radius: blueprint.radius
+		radius: blueprint.radius,
 	};
-}
-
+};
 
 type ThemeValue = string | { [key: string]: ThemeValue };
 export function flattenTheme(
 	obj: Theme | Record<string, ThemeValue>,
-	prefix: string = "-"
+	prefix: string = '-',
 ): Record<string, string> {
 	const result: Record<string, string> = {};
 
 	for (const [key, value] of Object.entries(obj)) {
-		const newKey = prefix === "-" ? `-${prefix}${key}` : `${prefix}-${key}`;
+		const newKey = prefix === '-' ? `-${prefix}${key}` : `${prefix}-${key}`;
 
-		if (typeof value === "object" && value !== null) {
+		if (typeof value === 'object' && value !== null) {
 			Object.assign(result, flattenTheme(value as Record<string, ThemeValue>, newKey));
 		} else {
 			result[newKey] = String(value);

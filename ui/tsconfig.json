@@ -12,7 +12,7 @@
 		"strict": true,
 		"target": "ES2023",
 		"useDefineForClassFields": false,
-    "allowImportingTsExtensions": true
+		"allowImportingTsExtensions": true
 	},
 	"include": ["./**/*.ts"]
 }

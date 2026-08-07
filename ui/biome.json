@@ -34,21 +34,6 @@
 			"lineWidth": 100
 		}
 	},
-	"linter": {
-		"enabled": true,
-		"rules": {
-			"recommended": true,
-			"a11y": "off",
-			"suspicious": {
-				"noConsole": {
-					"level": "error",
-					"options": {
-						"allow": ["warn", "error"]
-					}
-				}
-			}
-		}
-	},
 	"assist": {
 		"actions": {
 			"source": {

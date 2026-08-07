@@ -21,7 +21,6 @@ export class NeoElement extends Component {
 	@property()
 	border: BorderWidthName = 'thick';
 
-
 	get variantStyles() {
 		return html`
 			<style>
@@ -35,7 +34,6 @@ export class NeoElement extends Component {
 		`;
 	}
 
-
 	render() {
 		return html`
 			${this.variantStyles}
@@ -45,4 +43,3 @@ export class NeoElement extends Component {
 }
 
 customElements.define('go-neo-element', NeoElement);
-

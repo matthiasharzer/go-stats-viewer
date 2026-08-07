@@ -1,5 +1,3 @@
-
-
 import { css, html } from 'lit';
 import { Component } from '../litutil/Component.ts';
 
