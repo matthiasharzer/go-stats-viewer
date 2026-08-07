@@ -1,0 +1,47 @@
+package run
+
+import (
+	"fmt"
+	"net/http"
+
+	"github.com/spf13/cobra"
+
+	"github.com/matthiasharzer/go-stats-viewer/logging"
+	"github.com/matthiasharzer/go-stats-viewer/queries/pokedex"
+	"github.com/matthiasharzer/go-stats-viewer/views/pokemonview"
+)
+
+var httpPort int
+var httpHost string
+
+func init() {
+	Command.Flags().IntVarP(&httpPort, "port", "p", 4000, "The HTTP server port to listen on")
+	Command.Flags().StringVarP(&httpHost, "host", "", "", "The HTTP server host (default: all interfaces)")
+}
+
+var Command = &cobra.Command{
+	Use:          "run",
+	SilenceUsage: true,
+	RunE: func(cmd *cobra.Command, args []string) error {
+		pokemonView, err := pokemonview.New()
+		if err != nil {
+			return fmt.Errorf("failed to create pokémon view: %w", err)
+		}
+
+		mux := http.NewServeMux()
+		mux.HandleFunc("GET /api/v1/health", func(w http.ResponseWriter, r *http.Request) {
+			w.WriteHeader(http.StatusOK)
+			_, _ = w.Write([]byte("OK"))
+		})
+		mux.HandleFunc("GET /api/v1/pokedex", pokedex.Handler(pokemonView))
+
+		addr := fmt.Sprintf("%s:%d", httpHost, httpPort)
+		logging.Info("starting sync-watch-server", "host", httpHost, "port", httpPort)
+		err = http.ListenAndServe(
+			addr,
+			mux,
+		)
+
+		return err
+	},
+}
