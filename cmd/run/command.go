@@ -9,6 +9,7 @@ import (
 
 	"github.com/matthiasharzer/go-stats-viewer/logging"
 	"github.com/matthiasharzer/go-stats-viewer/queries/pokedex"
+	"github.com/matthiasharzer/go-stats-viewer/ui"
 	"github.com/matthiasharzer/go-stats-viewer/utils/httputils"
 	"github.com/matthiasharzer/go-stats-viewer/views/pokemonview"
 )
@@ -41,7 +42,18 @@ var Command = &cobra.Command{
 				httputils.CacheMiddleware(24*time.Hour, func(r *http.Request) string {
 					return pokemonView.Hash()
 				}),
-			}, pokedex.Handler(pokemonView)))
+			},
+			pokedex.Handler(pokemonView),
+		))
+
+		// Do not handle /api/* by the UI
+		mux.Handle("GET /api/", http.NotFoundHandler())
+		mux.Handle("GET /",
+			httputils.UseMiddleware(
+				[]httputils.Middleware{httputils.GZIPMiddleware()},
+				httputils.HandleStaticSite(ui.Content),
+			),
+		)
 
 		addr := fmt.Sprintf("%s:%d", httpHost, httpPort)
 		logging.Info("starting go-stats-viewer-server", "host", httpHost, "port", httpPort)
