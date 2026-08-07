@@ -12,7 +12,7 @@ func UseMiddleware(middlewares []Middleware, handler http.HandlerFunc) http.Hand
 	copy(reversedMiddlewares, middlewares)
 
 	// the first middleware in the array should be applied first to the request, so it has to be the last one that
-	// wraps the handler. Therefore, the middlewares are applied in reverser order
+	// wraps the handler. Therefore, the middlewares are applied in reverse order
 	slices.Reverse(reversedMiddlewares)
 
 	finalHandler := handler

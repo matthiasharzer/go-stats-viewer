@@ -56,7 +56,7 @@ func Handler(pokedexView view.ReadOnlyView[pokemon.Pokemon]) http.HandlerFunc {
 		}
 
 		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusOK)
+
 		err := json.NewEncoder(w).Encode(response)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusInternalServerError)

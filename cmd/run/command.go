@@ -44,7 +44,7 @@ var Command = &cobra.Command{
 			}, pokedex.Handler(pokemonView)))
 
 		addr := fmt.Sprintf("%s:%d", httpHost, httpPort)
-		logging.Info("starting sync-watch-server", "host", httpHost, "port", httpPort)
+		logging.Info("starting go-stats-viewer-server", "host", httpHost, "port", httpPort)
 		err = http.ListenAndServe(
 			addr,
 			mux,

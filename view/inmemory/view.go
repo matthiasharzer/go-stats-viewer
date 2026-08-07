@@ -38,6 +38,9 @@ func (v *View[T]) recalculateHash() {
 }
 
 func (v *View[T]) Hash() string {
+	v.mu.RLock()
+	defer v.mu.RUnlock()
+
 	return v.hash
 }
 

@@ -15,6 +15,7 @@ func GZIPMiddleware() Middleware {
 
 			w.Header().Set("Content-Encoding", "gzip")
 			w.Header().Set("Vary", "Accept-Encoding")
+			w.Header().Del("Content-Length")
 
 			gzipResponseWriter := NewGZIPResponseWriter(w)
 			defer func() {
