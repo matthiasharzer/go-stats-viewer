@@ -7,6 +7,7 @@ type PredicateFn[T any] = func(T) bool
 type ReadOnlyView[T any] interface {
 	Find(predicate PredicateFn[T]) (*T, error)
 	All() iter.Seq2[T, error]
+	Hash() string
 }
 
 type View[T any] interface {

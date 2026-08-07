@@ -31,3 +31,7 @@ type Pokemon struct {
 	SecondaryType Type
 	Assets        Assets
 }
+
+func (p Pokemon) Hash() string {
+	return p.ID
+}

@@ -3,11 +3,13 @@ package run
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/spf13/cobra"
 
 	"github.com/matthiasharzer/go-stats-viewer/logging"
 	"github.com/matthiasharzer/go-stats-viewer/queries/pokedex"
+	"github.com/matthiasharzer/go-stats-viewer/utils/httputils"
 	"github.com/matthiasharzer/go-stats-viewer/views/pokemonview"
 )
 
@@ -33,7 +35,13 @@ var Command = &cobra.Command{
 			w.WriteHeader(http.StatusOK)
 			_, _ = w.Write([]byte("OK"))
 		})
-		mux.HandleFunc("GET /api/v1/pokedex", pokedex.Handler(pokemonView))
+		mux.HandleFunc("GET /api/v1/pokedex", httputils.UseMiddleware(
+			[]httputils.Middleware{
+				httputils.GZIPMiddleware(),
+				httputils.CacheMiddleware(24*time.Hour, func(r *http.Request) string {
+					return pokemonView.Hash()
+				}),
+			}, pokedex.Handler(pokemonView)))
 
 		addr := fmt.Sprintf("%s:%d", httpHost, httpPort)
 		logging.Info("starting sync-watch-server", "host", httpHost, "port", httpPort)

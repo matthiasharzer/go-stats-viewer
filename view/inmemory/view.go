@@ -1,23 +1,44 @@
 package inmemory
 
 import (
+	"hash/fnv"
 	"iter"
+	"strconv"
 	"sync"
 
 	"github.com/matthiasharzer/go-stats-viewer/view"
 )
 
-type View[T any] struct {
+type Hashable interface {
+	Hash() string
+}
+
+type View[T Hashable] struct {
 	items []T
+	hash  string
 
 	mu sync.RWMutex
 }
 
-func NewView[T any]() view.View[T] {
+func NewView[T Hashable]() view.View[T] {
 	return &View[T]{
 		items: make([]T, 0),
 		mu:    sync.RWMutex{},
 	}
+}
+
+func (v *View[T]) recalculateHash() {
+	h := fnv.New64a()
+
+	for _, item := range v.items {
+		_, _ = h.Write([]byte(item.Hash()))
+	}
+
+	v.hash = strconv.FormatUint(h.Sum64(), 36)
+}
+
+func (v *View[T]) Hash() string {
+	return v.hash
 }
 
 func (v *View[T]) Insert(data ...T) error {
@@ -25,6 +46,7 @@ func (v *View[T]) Insert(data ...T) error {
 	defer v.mu.Unlock()
 
 	v.items = append(v.items, data...)
+	v.recalculateHash()
 
 	return nil
 }
@@ -40,6 +62,7 @@ func (v *View[T]) Update(predicate view.PredicateFn[T], updateFn func(*T) error)
 				return err
 			}
 			v.items[i] = item
+			v.recalculateHash()
 			return nil
 		}
 	}
@@ -76,6 +99,7 @@ func (v *View[T]) Delete(predicate view.PredicateFn[T]) error {
 	for i, item := range v.items {
 		if predicate(item) {
 			v.items = append(v.items[:i], v.items[i+1:]...)
+			v.recalculateHash()
 			return nil
 		}
 	}
@@ -86,5 +110,6 @@ func (v *View[T]) DeleteAll() error {
 	defer v.mu.Unlock()
 
 	v.items = make([]T, 0)
+	v.recalculateHash()
 	return nil
 }
