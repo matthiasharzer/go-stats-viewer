@@ -28,7 +28,7 @@ type ResponsePokemon struct {
 	Names         ResponseTranslation `json:"names"`
 	Stats         ResponseStats       `json:"stats"`
 	PrimaryType   ResponseType        `json:"primary_type"`
-	SecondaryType ResponseType        `json:"secondary_type"`
+	SecondaryType *ResponseType       `json:"secondary_type,omitempty"`
 	Assets        ResponseAssets      `json:"assets"`
 }
 

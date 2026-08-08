@@ -28,7 +28,7 @@ type Pokemon struct {
 	Names         Translation
 	Stats         Stats
 	PrimaryType   Type
-	SecondaryType Type
+	SecondaryType *Type
 	Assets        Assets
 }
 

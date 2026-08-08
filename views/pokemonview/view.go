@@ -22,7 +22,7 @@ func toDomainTranslation(translation PokedexTranslation) pokemon.Translation {
 }
 
 func toDomainPokemon(pokedexPokemon PokedexPokemon) pokemon.Pokemon {
-	return pokemon.Pokemon{
+	pkm := pokemon.Pokemon{
 		ID:         pokedexPokemon.ID,
 		DexNr:      pokedexPokemon.DexNr,
 		Generation: pokedexPokemon.Generation,
@@ -36,15 +36,19 @@ func toDomainPokemon(pokedexPokemon PokedexPokemon) pokemon.Pokemon {
 			Type:  pokedexPokemon.PrimaryType.Type,
 			Names: toDomainTranslation(pokedexPokemon.PrimaryType.Names),
 		},
-		SecondaryType: pokemon.Type{
-			Type:  pokedexPokemon.SecondaryType.Type,
-			Names: toDomainTranslation(pokedexPokemon.SecondaryType.Names),
-		},
 		Assets: pokemon.Assets{
 			Image:      pokedexPokemon.Assets.Image,
 			ShinyImage: pokedexPokemon.Assets.ShinyImage,
 		},
 	}
+	if pokedexPokemon.SecondaryType != nil {
+		pkm.SecondaryType = &pokemon.Type{
+			Type:  pokedexPokemon.SecondaryType.Type,
+			Names: toDomainTranslation(pokedexPokemon.SecondaryType.Names),
+		}
+	}
+	
+	return pkm
 }
 
 func New() (view.ReadOnlyView[pokemon.Pokemon], error) {

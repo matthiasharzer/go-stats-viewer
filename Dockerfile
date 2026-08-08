@@ -1,4 +1,15 @@
-FROM golang:1.26.5-alpine3.24 AS build
+FROM node:26.7.0-trixie-slim AS build-ui
+
+WORKDIR /app
+
+COPY . .
+
+WORKDIR /app/ui
+
+RUN npm ci && \
+		npm run build
+
+FROM golang:1.26.5-alpine3.24 AS build-server
 
 ARG version=unknown
 
@@ -12,6 +23,7 @@ RUN go mod download && \
 		go mod verify
 
 COPY . .
+COPY --from=build-ui /app/ui/public ui/public
 
 RUN module_path=$(go list -m) && \
 	go build \
@@ -23,7 +35,7 @@ FROM alpine:3.24
 
 RUN addgroup -S app && adduser -S -G app app
 
-COPY --from=build /go/bin/go-stats-viewer /usr/local/bin/go-stats-viewer
+COPY --from=build-server /go/bin/go-stats-viewer /usr/local/bin/go-stats-viewer
 
 WORKDIR /var/lib/go-stats-viewer
 RUN chown app:app /var/lib/go-stats-viewer

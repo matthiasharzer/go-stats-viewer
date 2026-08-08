@@ -11,3 +11,7 @@
 
 # Build directory
 build/
+
+# UI
+ui/public/dist
+ui/node_modules

@@ -1,0 +1,23 @@
+{
+	"name": "pokemon-go-stats-viewer",
+	"version": "1.0.0",
+	"devDependencies": {
+		"@biomejs/biome": "2.5.1",
+		"esbuild": "0.28.1",
+		"typescript": "6.0.3"
+	},
+	"scripts": {
+		"analyze": "biome check --error-on-warnings",
+		"test": "echo \"not implemented\"",
+		"format": "biome check --write",
+		"build": "esbuild --bundle --outdir=public/dist --keep-names src/index.ts",
+		"typecheck": "tsc --noEmit",
+		"watch": "esbuild --bundle --outdir=public/dist --keep-names --sourcemap --watch src/index.ts"
+	},
+	"dependencies": {
+		"lit": "3.3.3",
+		"@lit/task": "1.0.3",
+		"fuse.js": "7.5.0",
+		"@vaadin/router": "2.0.0"
+	}
+}

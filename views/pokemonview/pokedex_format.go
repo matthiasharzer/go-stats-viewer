@@ -28,6 +28,6 @@ type PokedexPokemon struct {
 	Names         PokedexTranslation `json:"names"`
 	Stats         PokedexStats       `json:"stats"`
 	PrimaryType   PokedexType        `json:"primaryType"`
-	SecondaryType PokedexType        `json:"secondaryType"`
+	SecondaryType *PokedexType       `json:"secondaryType,omitempty"`
 	Assets        PokedexAssets      `json:"assets"`
 }
