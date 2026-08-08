@@ -22,10 +22,10 @@ export class NeoElement extends Component {
 	border: BorderWidthName = 'thick';
 
 	@property({ attribute: 'on-hover' })
-	onHover: "none" | "flatten" = "none";
+	onHover: 'none' | 'flatten' = 'none';
 
 	get hoverStyles() {
-		if (this.onHover === "none") {
+		if (this.onHover === 'none') {
 			return html``;
 		}
 		return html`

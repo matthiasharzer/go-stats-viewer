@@ -1,5 +1,3 @@
-
-
 class HttpError extends Error {
 	response: Response;
 

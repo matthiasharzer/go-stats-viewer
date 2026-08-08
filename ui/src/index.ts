@@ -8,4 +8,3 @@ import './components/StatsSnippet.ts';
 import './PokemonPage.ts';
 import './components/PokemonImage.ts';
 import './components/TypeBadge.ts';
-

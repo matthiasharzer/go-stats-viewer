@@ -39,12 +39,15 @@ export class App extends Component {
 		pokedexService.loadingState.subscribeHost(this, true);
 
 		for (const [typeName, typeColor] of Object.entries(typeColors)) {
-			document.documentElement.style.setProperty(`--POKEMON_TYPE_${typeName.toUpperCase()}-color`, typeColor);
+			document.documentElement.style.setProperty(
+				`--POKEMON_TYPE_${typeName.toUpperCase()}-color`,
+				typeColor,
+			);
 		}
 
 		pokedexService.loaded.then(() => {
 			// this.selectedPokemon = pokedexService.searchPokemonByName("Azumarill")[0] || null;
-		})
+		});
 	}
 
 	handlePokemonSelected(pokemon: Pokemon) {
@@ -55,9 +58,13 @@ export class App extends Component {
 		return html`
 			<div class="app-container">
 				<go-pokemon-search @pokemon-selected=${(e: CustomEvent) => this.handlePokemonSelected(e.detail)}></go-pokemon-search>
-				${this.selectedPokemon ? html`
+				${
+					this.selectedPokemon
+						? html`
 					<go-pokemon-page .pokemon=${this.selectedPokemon}></go-pokemon-page>
-				` : ""}
+				`
+						: ''
+				}
 			</div>
 		`;
 	}
@@ -66,20 +73,26 @@ export class App extends Component {
 		return html`
 			<go-background></go-background>
 			${choose(pokedexService.loadingState.value, [
-			['loading', () => html`
+				[
+					'loading',
+					() => html`
 				<go-neo-element variant="default">
 					<div class="info-container">
 						Loading Pokedex...
 					</div>
-				</go-neo-element>`],
-			['error', () => html`
+				</go-neo-element>`,
+				],
+				[
+					'error',
+					() => html`
 				<go-neo-element variant="error">
 					<div class="info-container">
 						Error loading Pokedex. Please try again later.
 					</div>
-				</go-neo-element>`],
-			['loaded', () => this.app()]
-		])}
+				</go-neo-element>`,
+				],
+				['loaded', () => this.app()],
+			])}
 				`;
 	}
 }

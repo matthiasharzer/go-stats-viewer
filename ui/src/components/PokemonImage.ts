@@ -26,16 +26,17 @@ export class PokemonImage extends Component {
 	pokemon: Pokemon | null = null;
 
 	@property()
-	size: string = "48px"
+	size: string = '48px';
 
 	@property()
-	variant: "default" | "shiny" = "default"
+	variant: 'default' | 'shiny' = 'default';
 
 	renderImage() {
 		if (!this.pokemon?.assets) {
 			return html`<div class="pokemon-image-placeholder">?</div>`;
 		}
-		const imageUrl = this.variant === "shiny" ? this.pokemon.assets.shiny_image : this.pokemon.assets.image;
+		const imageUrl =
+			this.variant === 'shiny' ? this.pokemon.assets.shiny_image : this.pokemon.assets.image;
 		if (!imageUrl) {
 			return html`<div class="pokemon-image-placeholder">?</div>`;
 		}

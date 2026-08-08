@@ -114,12 +114,10 @@ export class PokemonPage extends Component {
 
 	get fourStarCP() {
 		if (!this.pokemon) {
-			throw new Error("Pokemon is not set");
+			throw new Error('Pokemon is not set');
 		}
 		return calculate4StarCPStats(this.pokemon);
 	}
-
-
 
 	renderCPStats() {
 		if (!this.pokemon) {

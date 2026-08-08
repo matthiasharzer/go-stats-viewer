@@ -18,8 +18,7 @@ export class TypeBadge extends Component {
 	`;
 
 	@property({ attribute: false })
-	type: Type | null = null
-
+	type: Type | null = null;
 
 	render() {
 		if (!this.type) {

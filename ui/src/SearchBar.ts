@@ -137,10 +137,9 @@ export class PokemonSearch extends Component {
 
 	submitSearch(pokemon: Pokemon) {
 		this.dispatchEvent(new CustomEvent('pokemon-selected', { detail: pokemon }));
-		this.inputElement.value = "";
+		this.inputElement.value = '';
 		this.pokemonOptions = [];
 	}
-
 
 	renderSearchResult(pokemon: Pokemon) {
 		return html`
@@ -167,7 +166,6 @@ export class PokemonSearch extends Component {
 			</go-neo-element>
 		`;
 	}
-
 
 	render() {
 		return html`

@@ -6,11 +6,10 @@ import type { Pokemon } from './pokemon.ts';
 const pokedexUrl = '/api/v1/pokedex';
 const matchThreshold = 0.5;
 
-
 class PokedexService {
 	private _loadingState = new Observable<'loading' | 'loaded' | 'error'>('loading');
 	private _httpClient: HttpClient;
-	private _pokedexFuse: Fuse<Pokemon> | null = null
+	private _pokedexFuse: Fuse<Pokemon> | null = null;
 
 	constructor(httpClient: HttpClient) {
 		this._httpClient = httpClient;
@@ -38,10 +37,20 @@ class PokedexService {
 	async load() {
 		this._loadingState.set('loading');
 		try {
-			const response = await this._httpClient.runQuery<{ pokedex: Pokemon[] }>(pokedexUrl, new AbortController().signal);
+			const response = await this._httpClient.runQuery<{ pokedex: Pokemon[] }>(
+				pokedexUrl,
+				new AbortController().signal,
+			);
 			this._pokedexFuse = new Fuse(response.pokedex, {
-				keys: ['names.en', 'names.de', 'primary_type.names.en', 'primary_type.names.de', 'secondary_type.names.en', 'secondary_type.names.de'],
-				threshold: matchThreshold
+				keys: [
+					'names.en',
+					'names.de',
+					'primary_type.names.en',
+					'primary_type.names.de',
+					'secondary_type.names.en',
+					'secondary_type.names.de',
+				],
+				threshold: matchThreshold,
 			});
 			this._loadingState.set('loaded');
 		} catch (error) {

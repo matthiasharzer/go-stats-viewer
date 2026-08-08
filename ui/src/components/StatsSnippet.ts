@@ -33,21 +33,20 @@ export class StatsSnippet extends Component {
 	`;
 
 	static sizes = {
-		small: "0.8rem",
-		medium: "1rem",
-		large: "1.2rem"
-	}
+		small: '0.8rem',
+		medium: '1rem',
+		large: '1.2rem',
+	};
 
 	@property({ attribute: false })
 	pokemon: Pokemon | null = null;
 
 	@property()
-	size: "small" | "medium" | "large" = "medium";
-
+	size: 'small' | 'medium' | 'large' = 'medium';
 
 	render() {
 		if (!this.pokemon) {
-			return "";
+			return '';
 		}
 		const size = StatsSnippet.sizes[this.size] || StatsSnippet.sizes.medium;
 		return html`
@@ -73,7 +72,7 @@ export class StatsSnippet extends Component {
 
 			</div>
 
-			`
+			`;
 	}
 }
 
