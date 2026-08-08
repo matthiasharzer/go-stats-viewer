@@ -94,17 +94,6 @@ export class PokemonSearch extends Component {
 				justify-content: flex-start;
 				align-items: flex-start;
 				gap: 0.3rem;
-
-				.type {
-					padding: 0.2rem 0.4rem;
-					border-radius: 4px;
-					font-size: 0.8rem;
-					color: white;
-					text-transform: capitalize;
-					background-color: var(--color);
-					text-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
-					box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
-				}
 			}
 		}
 
@@ -115,22 +104,6 @@ export class PokemonSearch extends Component {
 			outline: none;
 			padding: 0.5rem;
 			width: 100%;
-		}
-
-		.pokemon-image {
-			width: 48px;
-			height: 48px;
-		}
-
-		.pokemon-image-placeholder {
-			background-color: rgba(0, 0, 0, 0.2);
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			font-size: 1.5rem;
-			color: white;
-			width: 100%;
-			height: 100%;
 		}
 	`;
 
@@ -164,10 +137,9 @@ export class PokemonSearch extends Component {
 
 	submitSearch(pokemon: Pokemon) {
 		this.dispatchEvent(new CustomEvent('pokemon-selected', { detail: pokemon }));
-		this.inputElement.value = pokemon.names.en;
+		this.inputElement.value = "";
 		this.pokemonOptions = [];
 	}
-
 
 
 	renderSearchResult(pokemon: Pokemon) {
@@ -178,9 +150,7 @@ export class PokemonSearch extends Component {
 				on-hover="flatten"
 				@click=${() => this.submitSearch(pokemon)}
 			>
-				<div class="pokemon-image">
-					${pokemon.assets.image ? html`<img src=${pokemon.assets.image} alt=${pokemon.names.en}  />` : html`<div class="pokemon-image-placeholder">?</div>`}
-				</div>
+				<go-pokemon-image .pokemon=${pokemon} size="48px"></go-pokemon-image>
 				<div class="pokemon-details">
 					<div class="pokemon-names">
 						<h3>${pokemon.names.en}</h3>
@@ -190,8 +160,8 @@ export class PokemonSearch extends Component {
 						<go-stats-snippet .pokemon=${pokemon}></go-stats-snippet>
 					</div>
 					<div class="pokemon-types">
-						<span class="type" style="--color: var(--${pokemon.primary_type.type}-color)">${pokemon.primary_type.names.de}</span>
-						${pokemon.secondary_type ? html`<span class="type" style="--color: var(--${pokemon.secondary_type.type}-color)">${pokemon.secondary_type.names.de}</span>` : ''}
+						<go-type-badge .type=${pokemon.primary_type}></go-type-badge>
+						${pokemon.secondary_type ? html`<go-type-badge .type=${pokemon.secondary_type}></go-type-badge>` : ''}
 					</div>
 				</div>
 			</go-neo-element>

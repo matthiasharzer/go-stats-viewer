@@ -40,7 +40,7 @@ export const defaultTheme: Theme = buildTheme({
 				surface: '#FFC900',
 			},
 			'pokemon-page': {
-				surface: '#A66CFF',
+				surface: '#c6a1ff',
 			},
 
 		},
