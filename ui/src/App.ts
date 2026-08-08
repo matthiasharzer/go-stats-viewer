@@ -43,7 +43,7 @@ export class App extends Component {
 		}
 
 		pokedexService.loaded.then(() => {
-			this.selectedPokemon = pokedexService.searchPokemonByName("Azumarill")[0] || null;
+			// this.selectedPokemon = pokedexService.searchPokemonByName("Azumarill")[0] || null;
 		})
 	}
 

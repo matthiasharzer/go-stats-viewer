@@ -42,7 +42,15 @@ export const defaultTheme: Theme = buildTheme({
 			'pokemon-page': {
 				surface: '#c6a1ff',
 			},
-
+			'pokemon-attributes': {
+				surface: '#ffe275',
+			},
+			'pokemon-cp-stats': {
+				surface: '#00E5FF',
+			},
+			'pokemon-image': {
+				surface: '#fff1e8',
+			},
 		},
 		stats: {
 			attacK: '#306686',

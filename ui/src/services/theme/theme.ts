@@ -23,6 +23,9 @@ export interface ThemeBuilder<TColor> {
 			'search-box': Variant<TColor>;
 			'search-result': Variant<TColor>;
 			'pokemon-page': Variant<TColor>;
+			'pokemon-attributes': Variant<TColor>;
+			'pokemon-cp-stats': Variant<TColor>;
+			'pokemon-image': Variant<TColor>;
 		};
 		stats: {
 			attacK: TColor;
