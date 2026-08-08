@@ -50,6 +50,11 @@ export class App extends Component {
 		});
 	}
 
+	disconnectedCallback(): void {
+		super.disconnectedCallback();
+		pokedexService.loadingState.unsubscribeHost(this);
+	}
+
 	handlePokemonSelected(pokemon: Pokemon) {
 		this.selectedPokemon = pokemon;
 	}

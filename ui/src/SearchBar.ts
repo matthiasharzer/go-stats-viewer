@@ -64,30 +64,6 @@ export class PokemonSearch extends Component {
 				gap: 0.1rem;
 			}
 
-			.pokemon-stats {
-				display: flex;
-				flex-direction: row;
-				gap: 0.5rem;
-
-				.stat {
-					display: flex;
-					align-items: center;
-					gap: 0.2rem;
-
-					&.attack {
-						color: var(--attack-color);
-					}
-
-					&.defense {
-						color: var(--defense-color);
-					}
-
-					&.stamina {
-						color: var(--stamina-color);
-					}
-				}
-			}
-
 			.pokemon-types {
 				display: flex;
 				flex-wrap: wrap;
@@ -96,7 +72,6 @@ export class PokemonSearch extends Component {
 				gap: 0.3rem;
 			}
 		}
-
 
 		input {
 			background: rgba(0, 0, 0, 0.2);

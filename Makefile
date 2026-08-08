@@ -37,6 +37,8 @@ install-ui-dependencies:
 
 .PHONY: clean \
 				build \
+				qa \
+				test \
 				qa-server \
 				analyze-server \
 				test-server \

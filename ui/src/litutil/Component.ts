@@ -41,7 +41,7 @@ h1, h2, h3, h4, h5, h6 {
 `;
 
 export class Component extends LitElement {
-	private static _styles: CSSResultGroup;
+	protected static _styles: CSSResultGroup;
 
 	static get styles(): CSSResultGroup {
 		const derivedStyles = Component._styles || [];
