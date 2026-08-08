@@ -21,18 +21,6 @@ export const defaultTheme: Theme = buildTheme({
 			canvas: {
 				surface: '#fff1e8',
 			},
-			'search-box': {
-				surface: '#a9d7b8',
-			},
-			'search-result': {
-				surface: '#FFC900',
-			},
-			'sidebar-button-deselected': {
-				surface: '#FFC900',
-			},
-			'sidebar-button-selected': {
-				surface: '#FF4911',
-			},
 			info: {
 				surface: '#00E5FF',
 			},
@@ -45,6 +33,21 @@ export const defaultTheme: Theme = buildTheme({
 			error: {
 				surface: '#FF4911',
 			},
+			'search-box': {
+				surface: '#a9d7b8',
+			},
+			'search-result': {
+				surface: '#FFC900',
+			},
+			'pokemon-page': {
+				surface: '#A66CFF',
+			},
+
+		},
+		stats: {
+			attacK: '#306686',
+			defense: '#50501f',
+			stamina: '#7e1948',
 		},
 	},
 	border: { color: '#000000', width: { thick: '3px', thin: '1px' } },

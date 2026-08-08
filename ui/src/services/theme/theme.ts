@@ -22,6 +22,12 @@ export interface ThemeBuilder<TColor> {
 			error: Variant<TColor>;
 			'search-box': Variant<TColor>;
 			'search-result': Variant<TColor>;
+			'pokemon-page': Variant<TColor>;
+		};
+		stats: {
+			attacK: TColor;
+			defense: TColor;
+			stamina: TColor;
 		};
 	};
 	border: {

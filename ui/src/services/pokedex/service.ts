@@ -1,14 +1,16 @@
+import Fuse from 'fuse.js';
 import { type HttpClient, httpClient } from '../httpClient.ts';
 import { Observable, type ReadOnlyObservable } from '../reactive.ts';
 import type { Pokemon } from './pokemon.ts';
 
-
+const pokedexUrl = '/api/v1/pokedex';
+const matchThreshold = 0.5;
 
 
 class PokedexService {
 	private _loadingState = new Observable<'loading' | 'loaded' | 'error'>('loading');
 	private _httpClient: HttpClient;
-	private _pokemonList: Pokemon[] = [];
+	private _pokedexFuse: Fuse<Pokemon> | null = null
 
 	constructor(httpClient: HttpClient) {
 		this._httpClient = httpClient;
@@ -36,8 +38,11 @@ class PokedexService {
 	async load() {
 		this._loadingState.set('loading');
 		try {
-			const response = await this._httpClient.runQuery<{ pokedex: Pokemon[] }>('/api/v1/pokedex', new AbortController().signal);
-			this._pokemonList = response.pokedex;
+			const response = await this._httpClient.runQuery<{ pokedex: Pokemon[] }>(pokedexUrl, new AbortController().signal);
+			this._pokedexFuse = new Fuse(response.pokedex, {
+				keys: ['names.en', 'names.de', 'primary_type.names.en', 'primary_type.names.de', 'secondary_type.names.en', 'secondary_type.names.de'],
+				threshold: matchThreshold
+			});
 			this._loadingState.set('loaded');
 		} catch (error) {
 			console.error('Error loading pokedex:', error);
@@ -46,11 +51,11 @@ class PokedexService {
 	}
 
 	searchPokemonByName(name: string): Pokemon[] {
-		const lowerCaseName = name.toLowerCase();
-		return this._pokemonList.filter(pokemon =>
-			pokemon.names.en.toLowerCase().includes(lowerCaseName) ||
-			pokemon.names.de.toLowerCase().includes(lowerCaseName)
-		);
+		if (!this._pokedexFuse) {
+			throw new Error('Pokedex not loaded yet');
+		}
+		const results = this._pokedexFuse.search(name);
+		return results.map(result => result.item);
 	}
 }
 

@@ -7,24 +7,33 @@ import { pokedexService } from './services/pokedex/service.ts';
 
 export class PokemonSearch extends Component {
 	static styles = css`
+		:host {
+			width: 100%;
+		}
 
 		.pokemon-search {
 			display: flex;
 			flex-direction: column;
 			align-items: center;
 			justify-content: center;
-			margin-top: 2rem;
 			gap: 0.5rem;
-			width: 90vw;
-			max-width: 500px;
+			width: 100%;
 		}
 
 		.search-box {
 			width: 100%;
-			padding: 0.5rem;
+			padding: 1rem;
+			font-size: 1.5rem;
+		}
+
+		.search-results-floating-anchor {
+			position: relative;
+			top: 0;
+			width: 100%;
 		}
 
 		.search-results {
+			position: absolute;
 			display: flex;
 			flex-direction: column;
 			align-items: center;
@@ -55,6 +64,30 @@ export class PokemonSearch extends Component {
 				gap: 0.1rem;
 			}
 
+			.pokemon-stats {
+				display: flex;
+				flex-direction: row;
+				gap: 0.5rem;
+
+				.stat {
+					display: flex;
+					align-items: center;
+					gap: 0.2rem;
+
+					&.attack {
+						color: var(--attack-color);
+					}
+
+					&.defense {
+						color: var(--defense-color);
+					}
+
+					&.stamina {
+						color: var(--stamina-color);
+					}
+				}
+			}
+
 			.pokemon-types {
 				display: flex;
 				flex-wrap: wrap;
@@ -69,11 +102,11 @@ export class PokemonSearch extends Component {
 					color: white;
 					text-transform: capitalize;
 					background-color: var(--color);
+					text-shadow: 0px 0px 2px rgba(0, 0, 0, 1);
 					box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.5);
 				}
 			}
 		}
-
 
 
 		input {
@@ -81,8 +114,23 @@ export class PokemonSearch extends Component {
 			border: none;
 			outline: none;
 			padding: 0.5rem;
-			font-size: 1rem;
 			width: 100%;
+		}
+
+		.pokemon-image {
+			width: 48px;
+			height: 48px;
+		}
+
+		.pokemon-image-placeholder {
+			background-color: rgba(0, 0, 0, 0.2);
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 1.5rem;
+			color: white;
+			width: 100%;
+			height: 100%;
 		}
 	`;
 
@@ -121,18 +169,25 @@ export class PokemonSearch extends Component {
 	}
 
 
+
 	renderSearchResult(pokemon: Pokemon) {
 		return html`
 			<go-neo-element
 				class="search-result"
 				variant="search-result"
+				on-hover="flatten"
 				@click=${() => this.submitSearch(pokemon)}
 			>
-				<img src=${pokemon.assets.image} alt=${pokemon.names.en} width="48" height="48" />
+				<div class="pokemon-image">
+					${pokemon.assets.image ? html`<img src=${pokemon.assets.image} alt=${pokemon.names.en}  />` : html`<div class="pokemon-image-placeholder">?</div>`}
+				</div>
 				<div class="pokemon-details">
 					<div class="pokemon-names">
 						<h3>${pokemon.names.en}</h3>
 						<p>${pokemon.names.de}</p>
+					</div>
+					<div class="pokemon-stats">
+						<go-stats-snippet .pokemon=${pokemon}></go-stats-snippet>
 					</div>
 					<div class="pokemon-types">
 						<span class="type" style="--color: var(--${pokemon.primary_type.type}-color)">${pokemon.primary_type.names.de}</span>
@@ -153,9 +208,10 @@ export class PokemonSearch extends Component {
 			>
 				<input type="text" placeholder="Search for a Pokémon..." @input=${this.handleInput} @keydown=${this.handleKeyDown} ${ref(this._inputRef)} />
 			</go-neo-element>
-
-			<div class="search-results">
-				${this.pokemonOptions.map(pokemon => this.renderSearchResult(pokemon))}
+			<div class="search-results-floating-anchor">
+				<div class="search-results">
+					${this.pokemonOptions.map(pokemon => this.renderSearchResult(pokemon))}
+				</div>
 			</div>
 		</div>
 		`;

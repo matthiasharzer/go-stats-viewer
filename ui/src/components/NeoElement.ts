@@ -21,6 +21,23 @@ export class NeoElement extends Component {
 	@property()
 	border: BorderWidthName = 'thick';
 
+	@property({ attribute: 'on-hover' })
+	onHover: "none" | "flatten" = "none";
+
+	get hoverStyles() {
+		if (this.onHover === "none") {
+			return html``;
+		}
+		return html`
+			<style>
+				:host(:hover) {
+					box-shadow: 0px 0px 0px var(--shadow-color);
+					transform: translate(var(--shadow-offset-x), var(--shadow-offset-y));
+				}
+			</style>
+		`;
+	}
+
 	get variantStyles() {
 		return html`
 			<style>
@@ -37,6 +54,7 @@ export class NeoElement extends Component {
 	render() {
 		return html`
 			${this.variantStyles}
+			${this.hoverStyles}
 			<slot></slot>
 		`;
 	}

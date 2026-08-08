@@ -46,6 +46,11 @@ export const buildTheme = (blueprint: ThemeBlueprint): Theme => {
 				ink: blueprint.colors.defaults.ink,
 			},
 			variants: resolveSurfaces(blueprint.colors.variants),
+			stats: {
+				attacK: resolveColor(blueprint.colors.stats.attacK),
+				defense: resolveColor(blueprint.colors.stats.defense),
+				stamina: resolveColor(blueprint.colors.stats.stamina),
+			},
 		},
 		border: {
 			color: resolveColor(blueprint.border.color),

@@ -4,3 +4,5 @@ import './components/NeoButton.ts';
 import './components/Background.ts';
 import './SearchBar.ts';
 import './services/theme/themes.ts';
+import './components/StatsSnippet.ts';
+import './PokemonPage.ts';
