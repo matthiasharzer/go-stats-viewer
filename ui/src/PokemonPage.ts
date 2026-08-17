@@ -19,13 +19,19 @@ export class PokemonPage extends Component {
 			gap: 1rem;
 			padding: 1rem;
 			width: 100%;
+			container-type: inline-size;
 		}
 
 		.pokemon-image {
 			flex: 1 0 auto;
-			width: 200px;
-			height: 200px;
 			padding: 1rem;
+			display: flex;
+			justify-content: center;
+
+			.pokemon-image-sizer {
+				width: 200px;
+				height: 200px;
+			}
 		}
 
 
@@ -44,6 +50,12 @@ export class PokemonPage extends Component {
 			flex-direction: row;
 			width: 100%;
 			gap: 1rem;
+		}
+
+		@container (width < 600px) {
+			.basics{
+				display: grid;
+			}
 		}
 
 		.attributes-box {
@@ -168,7 +180,9 @@ export class PokemonPage extends Component {
 				>
 				<div class="basics">
 					<go-neo-element class="pokemon-image" variant="pokemon-image" radius="sharp" border="thick">
-						<go-pokemon-image .pokemon=${this.pokemon} size="100%"></go-pokemon-image>
+						<div class="pokemon-image-sizer">
+							<go-pokemon-image .pokemon=${this.pokemon} size="100%"></go-pokemon-image>
+						</div>
 					</go-neo-element>
 					<go-neo-element class="attributes-box" variant="pokemon-attributes" radius="sharp" border="thick">
 						<div class="attributes">

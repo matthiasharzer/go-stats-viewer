@@ -4,7 +4,7 @@ import { Observable, type ReadOnlyObservable } from '../reactive.ts';
 import type { Pokemon } from './pokemon.ts';
 
 const pokedexUrl = '/api/v1/pokedex';
-const matchThreshold = 0.5;
+const matchThreshold = 0.6;
 
 class PokedexService {
 	private _loadingState = new Observable<'loading' | 'loaded' | 'error'>('loading');
